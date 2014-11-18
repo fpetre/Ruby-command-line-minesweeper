@@ -110,9 +110,13 @@ end
 
 if __FILE__ == $PROGRAM_NAME
 
-  contents = File.read(ARGV[0]).chomp
+
+  ARGV[0] ? (file, filename = File.open(ARGV[0]), ARGV[0]) : (file, filename = File.open("save.txt", "a+"), "save.txt")
+
+  contents = File.read(file).chomp
+
   if contents.empty?
-    g = Minesweeper.new(ARGV[0])
+    g = Minesweeper.new(filename)
     g.run
   else
     g = YAML::load(contents)
